@@ -1,0 +1,78 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ── 백그라운드 재생 (audio_service) ── -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- Android 14(API 34)+ : 포그라운드 서비스 타입별 권한 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <!-- Android 13(API 33)+ : 알림 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 배터리 최적화 제외 요청 (화면 꺼짐 상태 장시간 재생 시 강제 종료 방지) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!-- ── 오디오 파일 읽기 ── -->
+    <!-- Android 13(API 33)+ -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <!-- Android 12(API 32) 이하 -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <application
+        android:label="hagioAudioPlayer"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ── audio_service : 미디어 재생 포그라운드 서비스 ── -->
+        <service
+            android:name="com.ryanheise.audioservice.AudioService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+
+        <!-- ── audio_service : 이어폰/블루투스 미디어 버튼 ── -->
+        <receiver
+            android:name="com.ryanheise.audioservice.MediaButtonReceiver"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
+        </intent>
+    </queries>
+</manifest>

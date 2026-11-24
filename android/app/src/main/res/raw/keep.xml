@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- release 빌드의 리소스 축소(shrinkResources)로 알림 아이콘이 지워지지 않도록 유지 -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_stat_music" />
