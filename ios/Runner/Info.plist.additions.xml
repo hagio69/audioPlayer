@@ -1,0 +1,24 @@
+<!--
+  ios/Runner/Info.plist 의 최상위 <dict> ... </dict> 안에 아래 키들을 추가하세요.
+  (flutter create 가 만든 기존 키는 그대로 두고 덧붙이면 됩니다.)
+-->
+
+<!-- 앱 표시 이름 -->
+<key>CFBundleDisplayName</key>
+<string>hagioAudioPlayer</string>
+
+<!-- 백그라운드 오디오 재생 + 잠금화면/제어 센터 컨트롤 -->
+<key>UIBackgroundModes</key>
+<array>
+    <string>audio</string>
+</array>
+
+<!-- 파일 앱 > 나의 iPhone > hagioAudioPlayer 폴더 노출 (음악 파일 복사용) -->
+<key>UIFileSharingEnabled</key>
+<true/>
+<key>LSSupportsOpeningDocumentsInPlace</key>
+<true/>
+
+<!-- (선택) file_picker 가 참조할 수 있는 미디어 라이브러리 접근 설명 -->
+<key>NSAppleMusicUsageDescription</key>
+<string>기기의 음악 파일을 재생목록에 추가하기 위해 접근합니다.</string>
